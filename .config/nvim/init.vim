@@ -19,6 +19,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dracula/vim'
 Plug 'mpickering/hlint-refactor-vim'
 Plug 'twinside/vim-hoogle'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
 call plug#end()
 
