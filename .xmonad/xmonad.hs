@@ -674,7 +674,7 @@ myWorkspaces = clickable . map xmobarEscape
                $ ["dev", "www", "sys", "chat", "mus", "vid", "gfx", "doc", "x"]
   where
         clickable l = [ "<action=xdotool key super+" ++ show n ++ "> " ++ ws ++ " </action>" |
-                      (i,ws) <- zip [1..7] l,
+                      (i,ws) <- zip [1..9] l,
                       let n = i ]
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
@@ -719,13 +719,13 @@ myKeys =
         , ("M-<Delete>", withFocused $ windows . W.sink) -- Push floating window back to tile
         , ("M-S-<Delete>", sinkAll)                      -- Push ALL floating windows to tile
 
-        , ("C-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
-        , ("C-M1-g", spawnSelected' myAppGrid)                -- grid select favorite apps
-        , ("C-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
-        , ("C-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
+        , ("M-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
+        , ("M-M1-g", spawnSelected' myAppGrid)                -- grid select favorite apps
+        , ("M-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
+        , ("M-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
 
     -- Tree Select/
-        , ("C-t t", treeselectAction tsDefaultConfig)
+        , ("M-t t", treeselectAction tsDefaultConfig)
 
     -- Windows navigation
         , ("M-m", windows W.focusMaster)     -- Move focus to the master window
@@ -772,19 +772,6 @@ myKeys =
         , ("M-u l", spawn "mocp --next")
         , ("M-u h", spawn "mocp --previous")
         , ("M-u <Space>", spawn "mocp --toggle-pause")
-
-    -- Emacs (CTRL-e followed by a key)
-        , ("C-e e", spawn "emacsclient -c -a ''")                            -- start emacs
-        , ("C-e b", spawn "emacsclient -c -a '' --eval '(ibuffer)'")         -- list emacs buffers
-        , ("C-e d", spawn "emacsclient -c -a '' --eval '(dired nil)'")       -- dired emacs file manager
-        , ("C-e i", spawn "emacsclient -c -a '' --eval '(erc)'")             -- erc emacs irc client
-        , ("C-e m", spawn "emacsclient -c -a '' --eval '(mu4e)'")            -- mu4e emacs email client
-        , ("C-e n", spawn "emacsclient -c -a '' --eval '(elfeed)'")          -- elfeed emacs rss client
-        , ("C-e s", spawn "emacsclient -c -a '' --eval '(eshell)'")          -- eshell within emacs
-        , ("C-e t", spawn "emacsclient -c -a '' --eval '(mastodon)'")        -- mastodon within emacs
-        , ("C-e v", spawn "emacsclient -c -a '' --eval '(+vterm/here nil)'") -- vterm within emacs
-        -- emms is an emacs audio player. I set it to auto start playing in a specific directory.
-        , ("C-e a", spawn "emacsclient -c -a '' --eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")
 
     --- My Applications (Super+Alt+Key)
         , ("M-M1-a", spawn (myTerminal ++ " -e ncspot"))
