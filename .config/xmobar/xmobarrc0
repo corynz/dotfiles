@@ -16,7 +16,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=t
        , persistent = True
        , iconRoot = "/home/jt/.xmonad/xpm/"  -- default: "."
        , commands = [ 
-       		      Run Com "/home/jt/.config/xmobar/trayer-padding-icon.sh" [] "padding" 36000
+       		      Run Com "/home/jt/.config/xmobar/trayer-padding-icon.sh" [] "padding" 20
                       -- Time and date
                     , Run Date "<fn=1>\xf133</fn> %b %d %Y (%H:%M)" "date" 50
                       -- Network up and down

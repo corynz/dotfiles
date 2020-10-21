@@ -108,7 +108,7 @@ myStartupHook = do
           spawnOnce "nitrogen --restore &"
           spawnOnce "picom &"
           spawnOnce "nm-applet &"
-          spawnOnce "volumeicon &"
+          spawnOnce "volctl &"
           -- spawnOnce "kak -d -s mysession &"
           spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x282c34  --height 22 &"          
           setWMName "LG3D"
@@ -510,25 +510,19 @@ searchList = [ ("a", archwiki)
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-                , NS "mocp" spawnMocp findMocp manageMocp
+                , NS "ncspot" spawnMocp findMocp manageMocp
                 ]
   where
     spawnTerm  = myTerminal ++ " -n scratchpad"
     findTerm   = resource =? "scratchpad"
     manageTerm = customFloating $ W.RationalRect l t w h
-               where
-                 h = 0.9
-                 w = 0.9
-                 t = 0.95 -h
-                 l = 0.95 -w
-    spawnMocp  = myTerminal ++ " -n mocp 'mocp'"
-    findMocp   = resource =? "mocp"
+    spawnMocp  = myTerminal ++ " -n ncspot"
+    findMocp   = resource =? "ncspot"
     manageMocp = customFloating $ W.RationalRect l t w h
-               where
-                 h = 0.9
-                 w = 0.9
-                 t = 0.95 -h
-                 l = 0.95 -w
+    h = 0.9
+    w = 0.9
+    t = 0.95 -h
+    l = 0.95 -w
 
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
@@ -646,7 +640,6 @@ myManageHook = composeAll
      , className =? "Gimp"    --> doFloat
      , title =? "Oracle VM VirtualBox Manager"     --> doFloat
      , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
-     , className =? "dota2"   --> doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
 myLogHook :: X ()
@@ -677,7 +670,7 @@ myKeys =
 
         , ("M-g g", spawnSelected' myAppGrid)                 -- grid select favorite apps
         , ("M-M1-g", spawnSelected' myAppGrid)                -- grid select favorite apps
-        , ("M-g t", goToSelected $ mygridConfig myColorizer)  -- goto selected window
+        , ("M1-<Tab>", goToSelected $ mygridConfig myColorizer)  -- goto selected window
         , ("M-g b", bringSelected $ mygridConfig myColorizer) -- bring selected window
 
     -- Tree Select/
@@ -721,7 +714,7 @@ myKeys =
 
     -- Scratchpads
         , ("M-C-<Return>", namedScratchpadAction myScratchPads "terminal")
-        , ("M-C-c", namedScratchpadAction myScratchPads "mocp")
+        , ("M-C-c", namedScratchpadAction myScratchPads "ncspot")
 
     -- Controls for mocp music player.
         , ("M-u p", spawn "mocp --play")
@@ -730,6 +723,7 @@ myKeys =
         , ("M-u <Space>", spawn "mocp --toggle-pause")
 
     --- My Applications (Super+Alt+Key)
+        , ("M-w", spawn myBrowser)
         , ("M-M1-a", spawn (myTerminal ++ " -e ncspot"))
         , ("M-M1-e", spawn (myTerminal ++ " -e neomutt"))
         , ("M-S-f", spawn "nautilus")
