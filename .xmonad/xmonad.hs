@@ -81,7 +81,7 @@ myTerminal :: String
 myTerminal = "alacritty"   -- Sets default terminal
 
 myBrowser :: String
-myBrowser = "brave "               -- Sets qutebrowser as browser for tree select
+myBrowser = "firefox "               -- Sets qutebrowser as browser for tree select
 -- myBrowser = myTerminal ++ " -e lynx " -- Sets lynx as browser for tree select
 
 myEditor :: String
@@ -146,7 +146,7 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
 myAppGrid = [ ("Audacity", "audacity")
                  , ("Deadbeef", "deadbeef")
                  , ("Emacs", "emacsclient -c -a emacs")
-                 , ("Brave", "brave")
+                 , ("Firefox", "firefox")
                  , ("Geany", "geany")
                  , ("Geary", "geary")
                  , ("Gimp", "gimp")
@@ -319,9 +319,9 @@ treeselectAction a = TS.treeselectAction a
        , Node (TS.TSNode "zshrc" "Config for the z shell" (spawn (myEditor ++ "/home/jt/.zshrc"))) []
        ]
    , Node (TS.TSNode "+ Screenshots" "take a screenshot" (return ()))
-       [ Node (TS.TSNode "Quick fullscreen" "take screenshot immediately" (spawn "scrot -d 1 ~/scrot/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
-       , Node (TS.TSNode "Delayed fullscreen" "take screenshot in 5 secs" (spawn "scrot -d 5 ~/scrot/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
-       , Node (TS.TSNode "Section screenshot" "take screenshot of section" (spawn "scrot -s ~/scrot/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
+       [ Node (TS.TSNode "Quick fullscreen" "take screenshot immediately" (spawn "scrot -d 1 ~/Pictures/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
+       , Node (TS.TSNode "Delayed fullscreen" "take screenshot in 5 secs" (spawn "scrot -d 5 ~/Pictures/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
+       , Node (TS.TSNode "Section screenshot" "take screenshot of section" (spawn "scrot -s ~/Pictures/%Y-%m-%d-@%H-%M-%S-scrot.png")) []
        ]
    , Node (TS.TSNode "------------------------" "" (spawn "xdotool key Escape")) []
    , Node (TS.TSNode "+ XMonad" "window manager commands" (return ()))
@@ -589,7 +589,7 @@ myShowWNameTheme = def
     }
 
 -- The layout hook
-myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $
+myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ smartBorders $ T.toggleLayouts floats $
                mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
                -- I've commented out the layouts I don't use.
@@ -637,9 +637,9 @@ myManageHook = composeAll
      , className =? "mpv"     --> doShift ( myWorkspaces !! 5 )
      , className =? "vlc"     --> doShift ( myWorkspaces !! 5 )
      , className =? "Gimp"    --> doShift ( myWorkspaces !! 8 )
-     , className =? "Gimp"    --> doFloat
      , title =? "Oracle VM VirtualBox Manager"     --> doFloat
-     , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
+     , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 6 )
+     , className =? "Shortwave" --> doShift ( myWorkspaces !! 4)
      ] <+> namedScratchpadManageHook myScratchPads
 
 myLogHook :: X ()
@@ -754,11 +754,12 @@ myKeys =
         [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
         , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
         ])
-          , ("<XF86HomePage>", spawn "firefox")
+        , ("<XF86HomePage>", spawn "firefox")
         , ("<XF86Search>", safeSpawn "firefox" ["https://www.google.com/"])
         , ("<XF86Mail>", runOrRaise "geary" (resource =? "thunderbird"))
         , ("<XF86Calculator>", runOrRaise "gcalctool" (resource =? "gcalctool"))
         , ("<XF86Eject>", spawn "toggleeject")
+        , ("M-<Print>", spawn "org.flameshot.Flameshot gui")
         , ("<Print>", spawn "gnome-screenshot")
         ]
         -- Appending search engine prompts to keybindings list.
