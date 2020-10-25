@@ -589,7 +589,7 @@ myShowWNameTheme = def
     }
 
 -- The layout hook
-myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ smartBorders $ T.toggleLayouts floats $
+myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ lessBorders OnlyScreenFloat $ T.toggleLayouts floats $
                mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
                -- I've commented out the layouts I don't use.
@@ -620,12 +620,9 @@ myWorkspaces = clickable . map xmobarEscape
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-     -- using 'doShift ( myWorkspaces !! 7)' sends program to workspace 8!
-     -- I'm doing it this way because otherwise I would have to write out
-     -- the full name of my workspaces.
      [ 
      -- browsers
-       title =? "firefox"     --> doShift ( myWorkspaces !! 1 )
+       className =? "firefox"     --> doShift ( myWorkspaces !! 1 )
      , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      , className =? "Brave-browser"  --> doShift ( myWorkspaces !! 1 )
      -- chat
