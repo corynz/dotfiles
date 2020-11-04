@@ -110,7 +110,7 @@ myStartupHook = do
           spawnOnce "nm-applet &"
           spawnOnce "volctl &"
           -- spawnOnce "kak -d -s mysession &"
-          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x282c34  --height 22 &"          
+          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --height 22 &"          
           setWMName "LG3D"
 
 myColorizer :: Window -> Bool -> X (String, String)
@@ -738,17 +738,17 @@ myKeys =
         , ("<XF86AudioMute>",   spawn "amixer set Master toggle")  
         , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
         , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
-        , ("<XF86AudioPlay>", spawn $ unwords [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
+        , ("<XF86AudioPlay>", spawn $ unwords [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
         , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
         ])
     , ("<XF86AudioNext>"
         , spawn $ unwords
-        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
+        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
         , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
         ])
     , ("<XF86AudioPrevious>"
         , spawn $ unwords
-        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
+        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
         , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
         ])
         , ("<XF86HomePage>", spawn "firefox")
@@ -774,6 +774,7 @@ myKeys =
 main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
+    -- xmproc0 <- spawnPipe "~/Projects/xmobar/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.0.1.0/build/xmobar/xmobar -x 0 ~/.config/xmobar/xmobarrc0"
     xmproc0 <- spawnPipe "xmobar -x 0 ~/.config/xmobar/xmobarrc0"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ ewmh def
