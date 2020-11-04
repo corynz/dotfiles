@@ -110,7 +110,7 @@ myStartupHook = do
           spawnOnce "nm-applet &"
           spawnOnce "volctl &"
           -- spawnOnce "kak -d -s mysession &"
-          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 ---tint 0x282c34 --height 22 &"          
+          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x282c34 --height 22 &"          
           setWMName "LG3D"
 
 myColorizer :: Window -> Bool -> X (String, String)
