@@ -110,7 +110,7 @@ myStartupHook = do
           spawnOnce "nm-applet &"
           spawnOnce "volctl &"
           -- spawnOnce "kak -d -s mysession &"
-          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --height 22 &"          
+          spawnOnce "trayer --iconspacing 6 --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 ---tint 0x282c34 --height 22 &"          
           setWMName "LG3D"
 
 myColorizer :: Window -> Bool -> X (String, String)
@@ -738,19 +738,9 @@ myKeys =
         , ("<XF86AudioMute>",   spawn "amixer set Master toggle")  
         , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
         , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
-        , ("<XF86AudioPlay>", spawn $ unwords [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
-        , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-        ])
-    , ("<XF86AudioNext>"
-        , spawn $ unwords
-        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
-        , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-        ])
-    , ("<XF86AudioPrevious>"
-        , spawn $ unwords
-        [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot"
-        , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-        ])
+        , ("<XF86AudioPlay>", spawn "playerctl -a play-pause")
+        , ("<XF86AudioNext>", spawn "playerctl -a next")
+        , ("<XF86AudioPrevious>", spawn "playerctl -a previous")
         , ("<XF86HomePage>", spawn "firefox")
         , ("<XF86Search>", safeSpawn "firefox" ["https://www.google.com/"])
         , ("<XF86Mail>", runOrRaise "geary" (resource =? "thunderbird"))
